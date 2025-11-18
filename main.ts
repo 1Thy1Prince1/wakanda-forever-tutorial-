@@ -1,0 +1,31 @@
+sprites.onOverlap(SpriteKind.Guard, SpriteKind.Enemy, function (sprite, otherSprite) {
+    Namor.setPosition(148, 2)
+    info.changeScoreBy(1)
+})
+info.onScore(20, function () {
+    Namor.destroy()
+    scene.setBackgroundImage(assets.image`boston-bridge`)
+    effects.confetti.startScreenEffect(500)
+    Shuri.sayText("WANKANDA FOREVER!", 2000, false)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    Namor.setPosition(148, 2)
+    info.changeLifeBy(-1)
+})
+let Namor: Sprite = null
+let Shuri: Sprite = null
+game.showLongText("When game begins, press the ARROW KEYS to move Shuri, Okoye and Riri. If Namor catches you, you will lose points! ", DialogLayout.Full)
+scene.setBackgroundImage(assets.image`wakanda`)
+game.showLongText("I will bet you Namor", DialogLayout.Top)
+Shuri = sprites.create(assets.image`shuri`, SpriteKind.Player)
+controller.moveSprite(Shuri)
+Shuri.setStayInScreen(true)
+Namor = sprites.create(assets.image`namor`, SpriteKind.Enemy)
+Namor.setPosition(148, 2)
+Namor.follow(Shuri, 30)
+let Riri = sprites.create(assets.image`riri`, SpriteKind.Guard)
+let Okoye = sprites.create(assets.image`okoye`, SpriteKind.Guard)
+controller.moveSprite(Riri, 34, -53)
+controller.moveSprite(Okoye, -68, -58)
+let projectile = sprites.createProjectileFromSprite(assets.image`Pew`, Okoye, 50, 50)
+projectile = sprites.createProjectileFromSprite(assets.image`Pew`, Riri, 50, 50)
